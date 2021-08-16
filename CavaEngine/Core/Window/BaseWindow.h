@@ -58,13 +58,13 @@ namespace Cava {
 		virtual void pollEvents() = 0;
 
 		virtual Rectangle<int> getClientSize() = 0;
-
 		virtual void setMode(Mode windowMode) = 0;
-
+				
 		virtual void setTitle(std::string title) = 0;
 		virtual void setPosition(uint32_t x, uint32_t y) = 0;
 		virtual void resize(uint32_t width, uint32_t height) = 0;
 
+		virtual void setIcon(std::string filename) {}
 
 		const std::string& getWindowTitle() { return options.title; }
 		const WindowHandle& getWindowHandle() { return windowHandle; }

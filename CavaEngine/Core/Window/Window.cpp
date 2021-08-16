@@ -1,7 +1,11 @@
+
 #include "Core/Debug/Debug.h"
 #include "Core/Math/Rectangle.h"
 #include "Core/Window/Window.h"
 #include "Core/Window/WindowCallbacks.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 namespace Cava {
 
@@ -27,8 +31,7 @@ namespace Cava {
 	void Window::init()
 	{
 		LogInfo("");
-
-
+		
 		// set window creation options
 		glfwWindowHint(GLFW_RESIZABLE, options.resizeable);
 
@@ -58,9 +61,11 @@ namespace Cava {
 
 		default:break;
 		}
-		
-		window = glfwCreateWindow(options.width, options.height, options.title.c_str(), nullptr, nullptr);
 
+
+		window = glfwCreateWindow(options.width, options.height, options.title.c_str(), nullptr, nullptr);
+		
+		
 		// create glfw window
 		glfwSetWindowUserPointer(window, this);
 		
@@ -129,6 +134,15 @@ namespace Cava {
 		return Rectangle<int>(0, 0, w, h);
 	}
 
+
+	void Window::setIcon(std::string filename)
+	{
+		GLFWimage icon[1];
+		icon[0].pixels = stbi_load(filename.c_str(), &icon[0].width, &icon[0].height, nullptr, 4);
+		glfwSetWindowIcon(window, 1, icon);
+		stbi_image_free(icon[0].pixels);
+	}
+	
 	
 	void Window::setTitle(std::string title)
 	{

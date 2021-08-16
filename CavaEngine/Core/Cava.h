@@ -1,6 +1,7 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #define GLFW_INCLUDE_NONE
+
 #include <Windows.h>
 
 // C++ RunTime Header Files
@@ -34,10 +35,9 @@ using float3 = glm::vec3;
 #pragma comment(lib, "glfw3dll.lib")
 
 
-// Cava Engine Headers
-#include "Core/Application.h"
-#include "Core/Renderer.h"
-
+// Core Engine Headers
+#include "Core/Application/Application.h"
+#include "Core/Application/Renderer.h"
 
 #include "Core/Debug/Debug.h"
 #include "Core/Event/InputEvents.h"

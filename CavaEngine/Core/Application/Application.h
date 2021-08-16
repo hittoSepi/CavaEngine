@@ -15,8 +15,10 @@ public:
 	struct Options
 	{
 		std::string title				= "Cava Engine";
+		std::string icon				= "";
 		Window::Options windowOptions	= Window::Options();
 		bool createConsole				= true;
+
 	};
 	
 	static void run(Renderer *renderer, const Options& opts);

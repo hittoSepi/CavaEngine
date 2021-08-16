@@ -14,9 +14,10 @@ namespace Cava {
 			Application app = Application(renderer);
 			app.runInternal(opts);
 		}
-		catch(...)
+		catch(std::exception ex)
 		{
-			LogError("Exception thrown.");
+			std::string msg = std::string("Exception thrown: " + (std::string)ex.what());
+			LogError(msg.c_str());
 		}
 		
 	}
@@ -73,6 +74,8 @@ namespace Cava {
 	void Application::loadInternalAssets()
 	{
 		LogInfo("");
+		std::string icon = options.icon.length() > 0 ? options.icon : "Data/UI/Images/CavaEngine.png";
+		window->setIcon(icon);
 	}
 
 	

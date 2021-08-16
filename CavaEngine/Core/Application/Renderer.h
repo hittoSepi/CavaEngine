@@ -1,4 +1,6 @@
 #pragma once
+
+
 namespace Cava {
 class Renderer
 {
@@ -11,6 +13,10 @@ public:
 	virtual void quit() = 0;
 	virtual void resize(uint32_t width, uint32_t height) = 0;
 protected:
+	void initInternal();
+	void updateInternal();
+	void renderInternal();
+	void quitInternal();
 	
 };
 }

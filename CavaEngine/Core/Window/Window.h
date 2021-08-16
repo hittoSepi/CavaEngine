@@ -24,11 +24,11 @@ namespace Cava {
 		Rectangle<int> getClientSize() override;
 
 		void setMode(Mode windowMode) override;
-		
+		void setIcon(std::string filename) override;
 		void setTitle(std::string title) override;
-		void resize(uint32_t width, uint32_t height) override;
 		void setPosition(uint32_t x, uint32_t y) override;
 
+		void resize(uint32_t width, uint32_t height) override;
 		void close(); // signals to close app.
 
 		bool isRunning(); // returns glfwShouldWindowClose();
