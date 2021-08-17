@@ -82,6 +82,7 @@ namespace Cava {
 	void Application::quit()
 	{
 		LogInfo("");
+		gui->quit();
 		renderer->quit();
 
 		delete window;
@@ -94,6 +95,9 @@ namespace Cava {
 		LogInfo("");
 		std::string icon = options.icon.length() > 0 ? options.icon : "Data/UI/Images/Icon_64.png";
 		window->setIcon(icon);
+
+		gui = new Gui(this);
+		
 	}
 
 
@@ -112,7 +116,18 @@ namespace Cava {
 	void Application::handleRenderFrame()
 	{
 		renderer->update();
+		gui->begin();
+		
+		window->BeginFrame(); // glClear
+
+		gui->render();
+		
+		renderer->renderGUI();
+		
 		renderer->render();
+		
+
+		window->EndFrame(); // swap buffers
 	}
 
 

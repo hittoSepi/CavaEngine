@@ -29,7 +29,7 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 #include <glm/glm.hpp>
-
+#include <glad/glad.h>
 
 using int2	 = glm::ivec2;
 using int3	 = glm::ivec3;
@@ -54,6 +54,9 @@ using float3 = glm::vec3;
 
 // Events
 #include "Core/Event/InputEvents.h"
+
+// GUI
+#include "Core/GUI/Gui.h"
 
 // Window 
 #include "Core/Window/Window.h"

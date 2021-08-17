@@ -148,6 +148,7 @@
     <ClInclude Include="Core\Cava.h" />
     <ClInclude Include="Core\Debug\Debug.h" />
     <ClInclude Include="Core\Event\InputEvents.h" />
+    <ClInclude Include="Core\GUI\Gui.h" />
     <ClInclude Include="Core\Math\Rectangle.h" />
     <ClInclude Include="Core\Application\Renderer.h" />
     <ClInclude Include="Core\OS\FileUtils.h" />
@@ -155,15 +156,33 @@
     <ClInclude Include="Core\Window\SplashScreen.h" />
     <ClInclude Include="Core\Window\Window.h" />
     <ClInclude Include="Core\Window\WindowCallbacks.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CavaEngine.cpp" />
     <ClCompile Include="Core\Application\Application.cpp" />
     <ClCompile Include="Core\Application\Renderer.cpp" />
     <ClCompile Include="Core\Debug\Debug.cpp" />
+    <ClCompile Include="Core\GUI\Gui.cpp" />
     <ClCompile Include="Core\OS\FileUtils.cpp" />
     <ClCompile Include="Core\Window\SplashScreen.cpp" />
     <ClCompile Include="Core\Window\Window.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="imgui\extra_fonts\binary_to_compressed_c.cpp" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="imgui\imgui_tables.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="InternalAssets\Splash1.bmp" />

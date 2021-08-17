@@ -13,10 +13,10 @@ namespace Cava {
 		
 		struct Options
 		{
-			uint32_t width = 876;
-			uint32_t height = 630;
-			double minDuration = 2000; // show atleast 4 seconds
-			std::string imageFile = "";
+			uint32_t width			= 876;
+			uint32_t height			= 630;
+			double minDuration		= 2000; // show atleast 4 seconds
+			std::string imageFile;
 		};
 
 		SplashScreen(const Options& options);
@@ -26,16 +26,15 @@ namespace Cava {
 		
 	
 	private:
-		Options		options;
-		TimePoint	startTime;
-			
+		Options			options;
+		TimePoint		startTime;
 		uint32_t		gdwWindowXPos;
 		uint32_t		gdwWindowYPos;
 		uint32_t		gdwWindowWidth;
 		uint32_t		gdwWindowHeight;
 		
-		HWND		splashWnd = nullptr;
-		WNDCLASSEX	wc;
+		HWND			splashWnd = nullptr;
+		WNDCLASSEX		wc;
 	};
 
 }

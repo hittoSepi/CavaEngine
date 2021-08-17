@@ -11,6 +11,7 @@ public:
 	void init() override;
 	void update() override;
 	void render() override;
+	void renderGUI() override;
 	void quit() override;
 	void resize(uint32_t width, uint32_t height) override;
 	

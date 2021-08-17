@@ -25,16 +25,21 @@ namespace Cava {
 
 		void show() override;
 		void hide() override;
-		
+
+		void BeginFrame() override;
+		void EndFrame() override;
 		
 		Rectangle<int> getClientSize() override;
 
+		void setClearColor(float r, float g, float b, float a) override;
 		void setMode(Mode windowMode) override;
 		void setIcon(std::string filename) override;
 		void setTitle(std::string title) override;
 		void setPosition(uint32_t x, uint32_t y) override;
 
 		void resize(uint32_t width, uint32_t height) override;
+
+		GLFWwindow* getGLFWwindow() { return window; }
 		void close(); // signals to close app.
 
 		bool isRunning(); // returns glfwShouldWindowClose();

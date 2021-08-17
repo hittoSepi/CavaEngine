@@ -6,8 +6,8 @@
 
 
 namespace Cava {
-
-class SplashScreen;
+	class Gui;
+	class SplashScreen;
 	
 ///<summary>
 ///	Create main application inheriting Renderer class and in application Application::run(pRenderer, options);
@@ -23,7 +23,7 @@ public:
 		Window::Options windowOptions		= Window::Options();
 		SplashScreen::Options splashOptions = SplashScreen::Options();
 		bool showSplashScreen				= true;
-		bool createConsole					= false;
+		bool createConsole					= true;
 	};
 	
 	static void run(Renderer *renderer, const Options& opts);
@@ -31,12 +31,9 @@ public:
 	void init();
 	void quit();
 
-	static void setInstance(HINSTANCE instance_)
-	{
-		LogInfo("");
-		instance = instance_;
-	}
-	
+	Window*		getWindow()		{ return window;	}
+	Renderer*	getRenderer()	{ return renderer;	}
+
 protected:
 		
 	Application(Renderer *renderer);
@@ -53,7 +50,8 @@ protected:
 	Window			*window			= nullptr;
 	Renderer		*renderer		= nullptr;
 	SplashScreen	*splashScreen	= nullptr;
-	inline static HINSTANCE instance = nullptr;
+	Gui				*gui			= nullptr;	
+	
 private:
 	void loadInternalAssets();
 	

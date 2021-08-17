@@ -33,6 +33,12 @@ void Game::render()
 }
 
 
+void Game::renderGUI()
+{
+	
+}
+
+
 void Game::quit()
 {
 	LogInfo("");

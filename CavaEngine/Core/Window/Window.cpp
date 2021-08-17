@@ -1,4 +1,4 @@
-
+#include "Core/Cava.h"
 #include "Core/Debug/Debug.h"
 #include "Core/Math/Rectangle.h"
 #include "Core/Window/Window.h"
@@ -6,6 +6,7 @@
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define STB_IMAGE_IMPLEMENTATION
+#define GLFW_INCLUDE_NONE
 
 #include <GLFW/glfw3native.h>
 #include <stb_image.h>
@@ -22,77 +23,81 @@ namespace Cava {
 		}
 
 		Window* window = new Window(opts, callbacks);
-		if(window == nullptr)
+		if (window == nullptr)
 		{
 			LogError("Could not create Window.");
 		}
 		return window;
-		
+
 	}
 
 
 	void Window::init(bool createWindow)
 	{
-		LogInfo("");
-		
 		// set window creation options
 		glfwWindowHint(GLFW_RESIZABLE, options.resizeable);
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-		
-		switch(options.mode)
+
+		switch (options.mode)
 		{
 		case Mode::Borderless:
 			glfwWindowHint(GLFW_DECORATED, false);
-		break;
+			break;
 
 		case Mode::BordelessFullscreen:
 			glfwWindowHint(GLFW_MAXIMIZED, true);
 			glfwWindowHint(GLFW_DECORATED, false);
 			glfwWindowHint(GLFW_FLOATING, true);
-			
+
 			monitor = glfwGetPrimaryMonitor();
 			videoMode = glfwGetVideoMode(monitor);
-			
+
 			options.width = videoMode->width;
 			options.height = videoMode->height;
-			
-		break;
-			
+
+			break;
+
 		case Mode::Hidden:
 			glfwWindowHint(GLFW_VISIBLE, false);
-		break;
+			break;
 
 		case Mode::Fullscreen:
 			glfwWindowHint(GLFW_DECORATED, false);
 			glfwWindowHint(GLFW_MAXIMIZED, true);
-		break;
-		
+			break;
+
 		case Mode::Windowed:
-		break;
+			break;
 
 		default:break;
 		}
 
-		if(!createWindow) {
+		if (!createWindow) {
 			glfwWindowHint(GLFW_VISIBLE, false);
 		}
-		
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+
 		window = glfwCreateWindow(options.width, options.height, options.title.c_str(), monitor, nullptr);
-		windowHandle =  glfwGetWin32Window(window);
+		glfwMakeContextCurrent(window);
 
-		auto windowXPos = (GetSystemMetrics(SM_CXSCREEN) - options.width) / 2;
-		auto windowYPos = (GetSystemMetrics(SM_CYSCREEN) - options.height) / 2;
+		if (!window)
+		{
+			LogError("Error creating GLFWwindow.");
+		}
 
-		glfwSetWindowPos(window, windowXPos, windowYPos);
-		
+		windowHandle = glfwGetWin32Window(window);
+
+		glfwSetWindowPos(window, (GetSystemMetrics(SM_CXSCREEN) - options.width) / 2, (GetSystemMetrics(SM_CYSCREEN) - options.height) / 2);
+
 		// create glfw window
 		glfwSetWindowUserPointer(window, this);
-		
+
 		// set callbacks
-		glfwSetKeyCallback(window,			WindowCallbacks::keyboardCallback);
-		glfwSetWindowSizeCallback(window,	WindowCallbacks::resizeCallback);
-		
-		
+		glfwSetKeyCallback(window, WindowCallbacks::keyboardCallback);
+		glfwSetWindowSizeCallback(window, WindowCallbacks::resizeCallback);
 	/*
 		glfwSetMouseButtonCallback(window,	Callbacks::mouseButtonCallback);
 		glfwSetCursorPosCallback(window,	Callbacks::mouseMoveCallback);
@@ -100,9 +105,20 @@ namespace Cava {
 		glfwSetCharCallback(window,			Callbacks::charInputCallback);
 		glfwSetDropCallback(window,			Callbacks::droppedFileCallback);
 	*/
+
+		if (!gladLoadGL()) {
+			LogError("Failed to initialize OpenGL context");
+		}
+
+		
+		setClearColor(0.05f, 0.05f, 0.07f, 1.0f);
+		glfwSwapInterval(options.vsync == true ? 1 : 0);
+
+		LogInfo("\n\nCreated OpenGL Context:\nOpenGL " << glGetString(GL_VERSION) << "\n" << glGetString(GL_RENDERER) << "\n");
+
 	}
 
-	
+
 	void Window::quit()
 	{
 		LogInfo("");
@@ -122,11 +138,14 @@ namespace Cava {
 		while (isRunning())
 		{
 			pollEvents();
+			
 			callbacks->handleRenderFrame();
+
+			
 		}
 	}
 
-	
+
 	bool Window::isRunning()
 	{
 		return !glfwWindowShouldClose(window);
@@ -150,13 +169,32 @@ namespace Cava {
 	{
 		glfwShowWindow(window);
 	}
-	
 
+
+	void Window::BeginFrame()
+	{
+		glViewport(0, 0, options.width, options.height);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	
+	void Window::EndFrame()
+	{
+		glfwSwapBuffers(window);
+	}
+
+
+	void Window::setClearColor(float r, float g, float b, float a)
+	{
+		glClearColor(r, g, b, a);
+	}
+	
+	
 	void Window::setMode(Mode windowMode)
 	{
-		
+
 	}
-		
+
 
 	Rectangle<int> Window::getClientSize()
 	{
@@ -173,15 +211,15 @@ namespace Cava {
 		glfwSetWindowIcon(window, 1, icon);
 		stbi_image_free(icon[0].pixels);
 	}
-	
-	
+
+
 	void Window::setTitle(std::string title)
 	{
 		LogInfo(title);
 		options.title = title;
 		glfwSetWindowTitle(window, title.c_str());
 	}
-	
+
 
 	void Window::resize(uint32_t width, uint32_t height)
 	{
@@ -191,7 +229,7 @@ namespace Cava {
 		glfwSetWindowSize(window, width, height);
 		callbacks->handleResize(width, height);
 	}
-	
+
 
 	void Window::setPosition(uint32_t x, uint32_t y)
 	{

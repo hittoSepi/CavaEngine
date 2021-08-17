@@ -61,9 +61,14 @@ namespace Cava {
 		virtual void messageLoop() = 0;
 		virtual void pollEvents() = 0;
 
+		virtual void BeginFrame() = 0;
+		virtual void EndFrame() = 0;
+		
+		
 		virtual Rectangle<int> getClientSize() = 0;
 		virtual void setMode(Mode windowMode) = 0;
-				
+
+		virtual void setClearColor(float r, float g, float b, float a) = 0;
 		virtual void setTitle(std::string title) = 0;
 		virtual void setPosition(uint32_t x, uint32_t y) = 0;
 		virtual void resize(uint32_t width, uint32_t height) = 0;
