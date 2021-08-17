@@ -1,7 +1,5 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-#define GLFW_INCLUDE_NONE
-
 #include <Windows.h>
 
 // C++ RunTime Header Files
@@ -13,6 +11,9 @@
 #include <fstream>
 #include <iosfwd>
 #include <memory>
+#include <chrono>
+#include <cstdint>
+#include <thread>
 
 // C RunTime Header Files
 #include <stdlib.h>
@@ -21,8 +22,12 @@
 #include <tchar.h>
 #include <time.h>
 
+
 // OpenGL Headers
+#define GLFW_INCLUDE_NONE
+#define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 #include <glm/glm.hpp>
 
 
@@ -34,13 +39,25 @@ using float3 = glm::vec3;
 
 #pragma comment(lib, "glfw3dll.lib")
 
-
+/////////////////////////
 // Core Engine Headers
+
+// Debugging
+#include "Core/Debug/Debug.h"
+
+// Application Framework
 #include "Core/Application/Application.h"
 #include "Core/Application/Renderer.h"
 
-#include "Core/Debug/Debug.h"
-#include "Core/Event/InputEvents.h"
-#include "Core/Window/Window.h"
+// OS Specific code
+#include "Core/OS/FileUtils.h"
 
+// Events
+#include "Core/Event/InputEvents.h"
+
+// Window 
+#include "Core/Window/Window.h"
+#include "Core/Window/SplashScreen.h"
+
+// Math
 #include "Core/Math/Rectangle.h"

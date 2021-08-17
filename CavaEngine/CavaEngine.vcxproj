@@ -150,7 +150,9 @@
     <ClInclude Include="Core\Event\InputEvents.h" />
     <ClInclude Include="Core\Math\Rectangle.h" />
     <ClInclude Include="Core\Application\Renderer.h" />
+    <ClInclude Include="Core\OS\FileUtils.h" />
     <ClInclude Include="Core\Window\BaseWindow.h" />
+    <ClInclude Include="Core\Window\SplashScreen.h" />
     <ClInclude Include="Core\Window\Window.h" />
     <ClInclude Include="Core\Window\WindowCallbacks.h" />
   </ItemGroup>
@@ -159,7 +161,12 @@
     <ClCompile Include="Core\Application\Application.cpp" />
     <ClCompile Include="Core\Application\Renderer.cpp" />
     <ClCompile Include="Core\Debug\Debug.cpp" />
+    <ClCompile Include="Core\OS\FileUtils.cpp" />
+    <ClCompile Include="Core\Window\SplashScreen.cpp" />
     <ClCompile Include="Core\Window\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="InternalAssets\Splash1.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

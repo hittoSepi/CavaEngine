@@ -4,7 +4,10 @@
 #include "Core/Window/Window.h"
 #include "Core/Window/WindowCallbacks.h"
 
+#define GLFW_EXPOSE_NATIVE_WIN32
 #define STB_IMAGE_IMPLEMENTATION
+
+#include <GLFW/glfw3native.h>
 #include <stb_image.h>
 
 namespace Cava {
@@ -28,13 +31,14 @@ namespace Cava {
 	}
 
 
-	void Window::init()
+	void Window::init(bool createWindow)
 	{
 		LogInfo("");
 		
 		// set window creation options
 		glfwWindowHint(GLFW_RESIZABLE, options.resizeable);
-
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+		
 		switch(options.mode)
 		{
 		case Mode::Borderless:
@@ -45,6 +49,13 @@ namespace Cava {
 			glfwWindowHint(GLFW_MAXIMIZED, true);
 			glfwWindowHint(GLFW_DECORATED, false);
 			glfwWindowHint(GLFW_FLOATING, true);
+			
+			monitor = glfwGetPrimaryMonitor();
+			videoMode = glfwGetVideoMode(monitor);
+			
+			options.width = videoMode->width;
+			options.height = videoMode->height;
+			
 		break;
 			
 		case Mode::Hidden:
@@ -62,9 +73,17 @@ namespace Cava {
 		default:break;
 		}
 
-
-		window = glfwCreateWindow(options.width, options.height, options.title.c_str(), nullptr, nullptr);
+		if(!createWindow) {
+			glfwWindowHint(GLFW_VISIBLE, false);
+		}
 		
+		window = glfwCreateWindow(options.width, options.height, options.title.c_str(), monitor, nullptr);
+		windowHandle =  glfwGetWin32Window(window);
+
+		auto windowXPos = (GetSystemMetrics(SM_CXSCREEN) - options.width) / 2;
+		auto windowYPos = (GetSystemMetrics(SM_CYSCREEN) - options.height) / 2;
+
+		glfwSetWindowPos(window, windowXPos, windowYPos);
 		
 		// create glfw window
 		glfwSetWindowUserPointer(window, this);
@@ -120,6 +139,18 @@ namespace Cava {
 		glfwSetWindowShouldClose(window, 1);
 	}
 
+
+	void Window::hide()
+	{
+		glfwHideWindow(window);
+	}
+
+
+	void Window::show()
+	{
+		glfwShowWindow(window);
+	}
+	
 
 	void Window::setMode(Mode windowMode)
 	{

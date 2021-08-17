@@ -46,14 +46,18 @@ namespace Cava {
 			bool resizeable		= false;
 			uint32_t width		= 1280;
 			uint32_t height		= 720;
+			
 		};
 
 
 		virtual ~BaseWindow() {}
 
-		virtual void init() = 0; /// Initialize and open window
+		virtual void init(bool showWindow) = 0; /// Initialize and open window
 		virtual void quit() = 0; /// Prepare to die.
 
+		virtual void show() = 0;
+		virtual void hide() = 0;
+		
 		virtual void messageLoop() = 0;
 		virtual void pollEvents() = 0;
 
@@ -77,10 +81,9 @@ namespace Cava {
 
 		BaseWindow() {}
 
-		// clang-no-format
-		Options			options = Options();
-		ICallbacks* callbacks = nullptr;
-		WindowHandle	windowHandle = nullptr;
+		Options			options			= Options();
+		ICallbacks*		callbacks		= nullptr;
+		WindowHandle	windowHandle	= nullptr;
 	private:
 	};
 

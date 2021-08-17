@@ -1,63 +1,81 @@
 #include "Core/Cava.h"
 #include "Application.h"
 
+
 namespace Cava {
-	
+
+
 	void Application::run(Renderer* renderer, const Options& opts)
 	{
 		try {
+
 			if (opts.createConsole)
 				CreateConsole();
-			
+
 			LogInfo("");
-			
+
 			Application app = Application(renderer);
 			app.runInternal(opts);
 		}
-		catch(std::exception ex)
+		catch (std::exception ex)
 		{
 			std::string msg = std::string("Exception thrown: " + (std::string)ex.what());
 			LogError(msg.c_str());
 		}
-		
+
 	}
 
-	
-	Application::Application(Renderer *renderer):
+
+	Application::Application(Renderer* renderer) :
 		renderer(renderer)
 	{
 		LogInfo("");
-		if(renderer == nullptr)
+		if (renderer == nullptr)
 		{
 			LogError("Renderer is null.");
 		}
 	}
 
-	
+
 	void Application::runInternal(const Options& opts)
 	{
 		LogInfo("");
 		options = opts;
 
 		init();
-	
+
 		window->messageLoop();
 
 		quit();
 	}
 
-	
+
 	void Application::init()
 	{
 		LogInfo("");
-	
 
 		window = Window::create(options.windowOptions, this);
-		window->init();
-		
+		window->init(!options.showSplashScreen);
+
+		if (options.showSplashScreen)
+		{
+			splashScreen = new SplashScreen(options.splashOptions);
+			splashScreen->show();
+		}
+		else
+		{
+			window->show();
+		}
+
 		loadInternalAssets();
-		
+
 		renderer->init();
+
+		if (options.showSplashScreen)
+		{
+			splashScreen->close();
+			window->show();
+		}
 	}
 
 
@@ -65,7 +83,7 @@ namespace Cava {
 	{
 		LogInfo("");
 		renderer->quit();
-		
+
 		delete window;
 		glfwTerminate();
 	}
@@ -74,25 +92,29 @@ namespace Cava {
 	void Application::loadInternalAssets()
 	{
 		LogInfo("");
-		std::string icon = options.icon.length() > 0 ? options.icon : "Data/UI/Images/CavaEngine.png";
+		std::string icon = options.icon.length() > 0 ? options.icon : "Data/UI/Images/Icon_64.png";
 		window->setIcon(icon);
 	}
 
-	
+
 	void Application::handleKeyboard(const KeyboardEvent& evt)
 	{
+
 	}
+
 
 	void Application::handleMouse()
 	{
-		
+
 	}
+
 
 	void Application::handleRenderFrame()
 	{
 		renderer->update();
 		renderer->render();
 	}
+
 
 	void Application::handleResize(uint32_t width, uint32_t height)
 	{

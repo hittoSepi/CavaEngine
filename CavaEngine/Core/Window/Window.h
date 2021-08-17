@@ -4,6 +4,8 @@
 #include "Core/Window/BaseWindow.h"
 
 struct GLFWwindow;
+struct GLFWmonitor;
+struct GLFWvidmode;
 
 namespace Cava {
 
@@ -15,11 +17,15 @@ namespace Cava {
 
 		static Window* create(const Options& opts, ICallbacks* callbacks);
 
-		void init() override;	// create and open window here
+		void init(bool showWindow) override;	// create and open window here
 		void quit() override;	// destroy window here
 
 		void messageLoop() override;
 		void pollEvents() override;
+
+		void show() override;
+		void hide() override;
+		
 		
 		Rectangle<int> getClientSize() override;
 
@@ -43,14 +49,16 @@ namespace Cava {
 			LogInfo(options.title);
 		}
 		
-		Options			options;
-		ICallbacks*		callbacks	= nullptr;
-		GLFWwindow*		window		= nullptr;
+		Options				options;
+		ICallbacks*			callbacks	= nullptr;
+		GLFWwindow*			window		= nullptr;
+		GLFWmonitor*		monitor		= nullptr;
+		const GLFWvidmode*	videoMode	= nullptr;
 	private:
 		Window()
 		{
 			options = Options();
-			init();
+			init(true);
 		}
 
 	};
