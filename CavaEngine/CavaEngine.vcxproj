@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\hitto\Documents\Ohjelmointi\CavaEngine\CavaEngine;C:\Users\hitto\Documents\Ohjelmointi\Cava Engine\CavaEngine\deps\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\hitto\Documents\Ohjelmointi\Cava Engine\CavaEngine\deps\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\hitto\Documents\Ohjelmointi\CavaEngine\CavaEngine;C:\Users\hitto\Documents\Ohjelmointi\CavaEngine\deps\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\hitto\Documents\Ohjelmointi\CavaEngine\deps\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
