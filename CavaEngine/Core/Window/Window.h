@@ -7,7 +7,8 @@ struct GLFWwindow;
 struct GLFWmonitor;
 struct GLFWvidmode;
 
-namespace Cava {
+namespace Cava
+{
 
 
 	class Window : public BaseWindow

@@ -2,7 +2,8 @@
 #include "Application.h"
 
 
-namespace Cava {
+namespace Cava
+{
 
 
 	void Application::run(Renderer* renderer, const Options& opts)
@@ -119,13 +120,11 @@ namespace Cava {
 		gui->begin();
 		
 		window->BeginFrame(); // glClear
-
-		gui->render();
-		
-		renderer->renderGUI();
 		
 		renderer->render();
 		
+		gui->render();
+		renderer->renderGUI();
 
 		window->EndFrame(); // swap buffers
 	}

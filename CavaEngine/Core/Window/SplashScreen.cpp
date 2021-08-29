@@ -79,7 +79,7 @@ namespace Cava
 	{
 
 		TimePoint current = Clock::now();
-		Duration dur = current - startTime;
+		const Duration dur = current - startTime;
 
 		double elapsed = dur.count();
 
@@ -92,7 +92,6 @@ namespace Cava
 		}
 
 		CloseWindow(splashWnd);
-	
 		DestroyWindow(splashWnd);
 	}
 

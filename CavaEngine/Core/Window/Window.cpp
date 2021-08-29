@@ -11,7 +11,8 @@
 #include <GLFW/glfw3native.h>
 #include <stb_image.h>
 
-namespace Cava {
+namespace Cava
+{
 
 	Window* Window::create(const Options& opts, ICallbacks* callbacks)
 	{

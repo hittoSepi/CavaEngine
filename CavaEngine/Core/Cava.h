@@ -31,16 +31,16 @@
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 
-using int2	 = glm::ivec2;
-using int3	 = glm::ivec3;
-using float2 = glm::vec2;
-using float3 = glm::vec3;
-
+using int2		= glm::ivec2;
+using int3		= glm::ivec3;
+using float2	= glm::vec2;
+using float3	= glm::vec3;
+using IntHash	= uint64_t;
 
 #pragma comment(lib, "glfw3dll.lib")
 
 /////////////////////////
-// Core Engine Headers
+// Core Headers
 
 // Debugging
 #include "Core/Debug/Debug.h"
@@ -62,5 +62,29 @@ using float3 = glm::vec3;
 #include "Core/Window/Window.h"
 #include "Core/Window/SplashScreen.h"
 
+// Shader
+#include "Core/Shader/Shader.h"
+
+// Buffers
+#include "Core/Buffer/Vertex.h"
+#include "Core/Buffer/VertexBuffer.h"
+#include "Core/Buffer/VertexArray.h"
+
 // Math
 #include "Core/Math/Rectangle.h"
+
+// Misc
+#include "Core/Singleton/Singleton.h"
+#include "Core/Thread/ThreadPool.h"
+
+/////////////////////////
+// Engine Headers
+
+#include "Engine/BaseObject.h"
+#include "Engine/GameObject/GameObject.h"
+#include "Engine/Component/Component.h"
+
+#include "Engine/GameObject/GameObjectManager.h"
+#include "Engine/Component/ComponentManager.h"
+
+#include "Engine/Engine.h"

@@ -1,9 +1,10 @@
 #pragma once
-
 #include <chrono>
 
-namespace Cava {
+namespace Cava 
+{
 
+	
 	class SplashScreen
 	{
 	public:
